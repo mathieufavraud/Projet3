@@ -385,10 +385,11 @@ dialog h1 {
 	border-top: 1px solid #B3B3B3;
 }
 
-dialog button {
+.button-add {
+	padding: 10px 30px;
 	background: #1D6154;
 	border-radius: 60px;
-	padding: 10px;
+	cursor: pointer;
 	font-family: 'Syne';
 	font-style: normal;
 	font-weight: 700;
@@ -478,10 +479,27 @@ dialog button {
 	margin: 30px;
 }
 
-.add-photo button {	
+.add-photo i {
+	margin: 20px;
+}
+
+.add-label {
+	cursor: pointer;
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 16px;
+	text-align: center;	
+	color: #306685;
 	background: #CBD6DC;
 	border-radius: 50px;
-	margin: 20px;
+	padding: 7px;
+	margin: 5px;
+}
+
+#form-file {
+	display: none;
 }
 
 .upload label {
@@ -495,13 +513,25 @@ dialog button {
 .upload input {
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 	margin: 15px;
+	width: 75%;
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 16px;
+	color: #444444;
+	padding: 5px 0px;
 }
 
-.upload button {
-	margin: 30px;
-	padding: 10px 30px;
-	background: #A7A7A7;
-	border-radius: 60px;
+.upload select {
+	width: 75%;
+	padding: 20px 10px;
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 16px;
+	color: #444444;
 }
 
 .upload {
@@ -512,6 +542,53 @@ dialog button {
 	border-top: 1px solid #B3B3B3;
 }
 
-button {
+.button-disabled {
+	margin: 30px;
+	padding: 10px 30px;
+	background: #A7A7A7;
+	border-radius: 60px;
+	cursor: not-allowed;
+	font-family: 'Syne';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 17px;
+	text-align: center;
+	color: #FFFFFF;
+}
+
+.button-enabled {
+	margin: 30px;
+	padding: 10px 30px;
+	background: #1D6154;
+	border-radius: 60px;
 	cursor: pointer;
+	font-family: 'Syne';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 17px;
+	text-align: center;
+	color: #FFFFFF;
+}
+
+select {
+	background: #FFFFFF;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	margin: 15px;
+	padding: 10px;
+	width: 75%;
+}
+
+option {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 16px;
+	color: #444444;
+}
+
+.thumbnail {
+	width: 75%;
 }
