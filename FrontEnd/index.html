@@ -46,7 +46,7 @@
 				<!-- Affichage des travaux a editer -->
 			</div>
 			<div class="work-buttons">
-				<button id="add-button">Ajouter une photo</button>
+				<button id="add-button" class="button-add">Ajouter une photo</button>
 				<a href="" id="delete-link">supprimer la galerie</a>
 			</div>
 		</div>
@@ -59,21 +59,23 @@
 				<a href="" id="close"><i class="fa-solid fa-xmark fa-xl"></i></a>
 			</div>
 			<h1>Ajout photo</h1>
-			<!-- Formulaire pour l'ajout des images -->
-			<div class="add-photo">
-				<i class="fa-solid fa-image fa-2xl"></i>
-				<label for="file">Ajouter photo</label>
+				<!-- Formulaire pour l'ajout des images -->
+			<div class="add-photo" id="thumbnail">
+				<!-- Code pour l'ajout d'une image, a remplacer par l'aperçu -->
+				<!-- <i class="fa-solid fa-image fa-2xl"></i>
+				<label for="form-file" class="add-label">Ajouter photo</label>
 				<input type="file" name="file" id="form-file">
-				<button>Ajouter photo</button>
-				<p>jpg, png : 4mo max</p>
+				<p>jpg, png : 4mo max</p> -->
 			</div>
 			<form action="" class="upload">
 				<label for="title">Titre</label>
 				<input type="text" name="title" id="form-title">
-				<label for="category">Catégorie</label>
-				<input type="number" name="category" id="form-category">
+				<label for="category" id="form-category">Catégorie</label>
+				<select name="category" id="category-select">
+					<!-- Formulaire pour la selection des catégories -->
+				</select>
 				<div class="validate-button">
-					<button id="validate" type="button">Valider</button>
+					<button id="validate" type="button" class="button-disabled">Valider</button>
 				</div>
 			</form>
 		</div>
@@ -121,11 +123,3 @@
 </footer>
 </body>
 </html>
-
-			<!-- Affichage des filtres-->
-			<!--
-				<button id="all" class="filter">Tous​</button>
-				<button id="Objets" class="filter">​Objets</button>
-				<button id="Appartements" class="filter">​Appartements</button>
-				<button id="Hotels & restaurants" class="filter">Hotels & restaurants</button>
-			-->
