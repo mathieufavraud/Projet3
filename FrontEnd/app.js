@@ -1,5 +1,13 @@
 const url = await GetUrl(); // Récupération url serveur
 
+async function GetCategory () // Récuperation des catégories sur le serveur
+{
+    const data = await fetch(`${url}categories`);
+    const works = await data.json();
+
+    return (works);
+}
+
 /* Affichage des boutons */
 
 function CreateCategoryHTML(name, id, content, filterID) // Création du html pour chaque element filtre, et intégration dans le DOM
@@ -16,17 +24,17 @@ function CreateCategoryHTML(name, id, content, filterID) // Création du html po
     });
 }
 
-async function DisplayCategory() // Récuperation des categories d'images sur le serveur
+async function DisplayCategory () // Conditions initiale pour l'affichage des catégories
 {
-    const data = await fetch(`${url}categories`);
-    const works = await data.json();
-  
+    const works = await GetCategory();
+
     CreateCategoryHTML("filter", "all", "Tous", 0);
 
     for (let id of works)
     {
-        CreateCategoryHTML("filter",id.name,id.name, id.id);
+        CreateCategoryHTML("filter",id.name,id.name,id.id);
     }
+
 }
 
 /* Initialisation et alternance des filtres */
@@ -39,7 +47,7 @@ function InitiateFilter() // Etat initial des filtres et images
 
 function DisplayFilter (filterID) // Affichage du css des filtres si cliqué
 {
-    let buttons = document.getElementById("filters").childNodes;
+    const buttons = document.getElementById("filters").childNodes;
 
     for (let filter = 0; filter<buttons.length; filter++)
     {
@@ -95,7 +103,7 @@ async function DisplayWorks (filterID) // Récupération des travaux sur le serv
 
 function CheckLogin() // Vérification de la presence du token utilisateur
 {
-    let login = sessionStorage.getItem("token");
+    const login = sessionStorage.getItem("token");
 
     if(login!=null)
     {
@@ -113,7 +121,7 @@ function CheckLogin() // Vérification de la presence du token utilisateur
 
 async function DeleteWork(id) // Suppression travaux
 {
-    let token = sessionStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     const data = await fetch(`${url}works/${id}`, {
         method: 'DELETE',
         headers: {"Authorization": `Bearer ${token}`}});
@@ -123,7 +131,7 @@ async function DeleteWork(id) // Suppression travaux
 
 async function AddWork (formData) // Ajout travaux
 {
-    let token = sessionStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     const data = await fetch(`${url}works`, {
         method: 'POST',
         headers: {'Authorization': `Bearer ${token}`},
@@ -146,7 +154,7 @@ function CloseModal (modal, event) // Fermer la fenetre modale
     modal.close();
 }
 
-function TestFocus(modal) // Fermer la fenetre si on clique en dehors
+function CheckFocus(modal) // Fermer la fenetre si on clique en dehors
 {
     document.addEventListener("click", (event) => {
         if(event.target.id === modal.id)
@@ -191,7 +199,7 @@ function ModalWindow () // Affichage et fermeture de la fenetre modale
 {
     const modal = document.getElementById('modal-window');
     const edit = document.getElementById('edit-window');
-    let login = sessionStorage.getItem("token");
+    const login = sessionStorage.getItem("token");
 
     if(login!=null)
     {
@@ -210,7 +218,7 @@ function ModalWindow () // Affichage et fermeture de la fenetre modale
             EditWindow();
         })
 
-        TestFocus(modal);
+        CheckFocus(modal);
     }
 } 
 
@@ -219,6 +227,10 @@ function EditWindow () // Affichage et fermeture de la fenetre modale d'edition
 {
     const modal = document.getElementById('modal-window');
     const edit = document.getElementById('edit-window');
+    const display = `<i class="fa-solid fa-image fa-2xl"></i>
+                    <label for="form-file" class="add-label">Ajouter photo</label>
+                    <input type="file" name="file" id="form-file">
+                    <p>jpg, png : 4mo max</p>`;
 
     document.getElementById('close').addEventListener("click", (event) => {
         CloseModal(modal,event);
@@ -230,36 +242,123 @@ function EditWindow () // Affichage et fermeture de la fenetre modale d'edition
         CreateModalHTML();
     })
 
-    TestFocus(edit);
+    document.getElementById('thumbnail').innerHTML = display;
 
-    AddForm();
+    CheckFocus(edit);
+
+    DisplayForm();
 }
 
-function AddForm () // Récuperation des formulaire d'ajout
+function CheckForm (file, title, category) // Test du contenu des formulaires et retourne si correct
 {
-    document.getElementById('validate').addEventListener("click", (event) => {
+    const button = document.getElementById('validate');
+
+    if(file === undefined || title === "")
+    { 
+        button.classList.remove('button-enabled');
+        button.classList.add('button-disabled');
+        return(false);
+    }
+    else
+    {
+        button.classList.remove('button-disabled');
+        button.classList.add('button-enabled');
+        return(true);
+    }
+}
+
+async function DisplayThumbnail (image)
+{
+    const thumbnail = document.getElementById('thumbnail');
+    const reader = new FileReader();
+    let img = document.createElement("img");
+
+    if(image)
+    {
+        reader.readAsDataURL(image);
+    }
+    
+    reader.addEventListener("load", () => {
+        //img.src = reader.result;
+        img.setAttribute('src',reader.result);
+        img.setAttribute('class','thumbnail');
+        console.log(img);
+    }, false);
+
+    while(thumbnail.hasChildNodes())
+    {
+        thumbnail.removeChild(thumbnail.firstChild);
+    }
+
+    thumbnail.append(img);
+}
+
+async function DisplayForm () // Affiche et rend interactif le formulaire d'ajout d'image
+{
+    const works = await GetCategory();
+    const select = document.getElementById('category-select');
+    const file = document.getElementById('form-file');
+    const title = document.getElementById('form-title');
+    const button = document.getElementById('validate');
+    const edit = document.getElementById('edit-window');
+    let formData = new FormData();
+    let image; 
+    let category = 1;
+    let check = false;
+
+    file.addEventListener("change", (event) => {
+        if(event.target.files[0])
+        {
+            image = event.target.files[0]
+            CheckForm(image, title.value, category);
+            check = CheckForm(image, title.value, category);
+            DisplayThumbnail (image);
+        }
+    })
+
+    title.addEventListener("input", (event) => {
+        CheckForm(image, title.value, category);
+        check = CheckForm(image, title.value, category);
+    })
+
+    while(select.hasChildNodes())
+    {
+        select.removeChild(select.firstChild);
+    }
+
+    for (let id of works)
+    {
+        let option = document.createElement('option');
+
+        option.setAttribute('value',`${id.name}`);
+        option.innerText = `${id.name}`;
+
+        select.append(option);
+
+        option.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            category = id.id;
+            CheckForm(image, title.value, category);
+        })
+    }
+
+    button.addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation();
 
-        let formData = new FormData();
-        let file = document.getElementById('form-file').files[0];
-        let title = document.getElementById('form-title').value;
-        let category = document.getElementById('form-category').value;
-
-        if(file === undefined || title === "" || category === "")
+        if(check===true)
         {
-            
-            alert("le formulaire n'est pas rempli correctement");     
-        }
-        else
-        {
-            formData.append("image", file);
-            formData.append("title", title);
-            formData.append("category", category);
+            formData.append("image", image);
+            formData.append("title", title.value);
+            formData.append("category", category); 
 
             AddWork(formData);
-        }    
-    });
+            CloseModal(edit);
+            title.value="";
+        }
+    })
+    
 }
 
 /* Execution du programme au chargement de la page */
