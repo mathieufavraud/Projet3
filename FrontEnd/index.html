@@ -1,125 +1,149 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Sophie Bluel - Architecte d'intérieur</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
+		rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<script src="https://kit.fontawesome.com/b0b08cca0c.js" crossorigin="anonymous"></script>
-	<script src="url.js"></script>
-	<script defer type="module" src="app.js"></script>
 </head>
+
 <body>
-<header>
-	<div class="hidden edition" id="edition">
-			<a href="" id="edit-button"><i class="fa-regular fa-pen-to-square"></i><p>Mode édition</p></a><button>Publier les changements</button>
-	</div>
-	<div class="head">
-		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+	<header>
+		<div class="hidden edition" id="edition">
+			<a href="#"><i class="fa-regular fa-pen-to-square"></i>
+				<p>Mode édition</p>
+			</a><button>publier les changements</button>
+		</div>
+		<div class="head">
+			<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+			<nav>
+				<ul>
+					<li>projets</li>
+					<li>contact</li>
+					<li><span>
+							<!-- Affichage du login si utilisateur non connecté, sinon logout -->
+							<a href="login.html" id="login">login</a>
+							<a class="hidden" href="#" id="logout">logout</a>
+						</span></li>
+					<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+	<main>
+		<dialog class="modal" id="modal-window">
+			<!-- Fenetre modale -->
+			<div id="content">
+				<div class="top-window">
+					<a href="" id="close"><i class="fa-solid fa-xmark fa-xl"></i></a>
+				</div>
+				<h1>Galerie photo</h1>
+				<div id="work-edit" class="work-edit">
+					<!-- Affichage des travaux a editer -->
+				</div>
+				<div class="work-buttons">
+					<button id="add-button" class="button-add">Ajouter une photo</button>
+					<a href="" id="delete-link">supprimer la galerie</a>
+				</div>
+			</div>
+		</dialog>
+		<dialog class="modal" id="edit-window">
+			<!-- Seconde fenetre modale pour l'upload de fichiers -->
+			<div id="content">
+				<div class="top-window-edit">
+					<a href="" id="return"><i class="fa-sharp fa-solid fa-arrow-left fa-xl"></i></a>
+					<a href="" id="close2"><i class="fa-solid fa-xmark fa-xl"></i></a>
+				</div>
+				<h1>Ajout photo</h1>
+				<!-- Formulaire pour l'ajout des images -->
+				<div class="add-photo" id="thumbnail">
+					<!-- Code pour l'ajout d'une image, a remplacer par l'aperçu -->
+				</div>
+				<form action="" class="upload">
+					<label for="title">Titre</label>
+					<input type="text" name="title" id="form-title">
+					<label for="category" id="form-category">Catégorie</label>
+					<select name="category" id="category-select">
+						<!-- Formulaire pour la selection des catégories -->
+					</select>
+					<div class="validate-button">
+						<button id="validate" type="button" class="button-disabled">Valider</button>
+					</div>
+				</form>
+			</div>
+		</dialog>
+		<section id="introduction">
+			<figure>
+				<img src="./assets/images/sophie-bluel.png" alt="">
+				<div class="hidden edition-button">
+					<a href="#"><i class="fa-regular fa-pen-to-square"></i>
+						<p>modifier</p>
+					</a>
+				</div>
+			</figure>
+			<article>
+				<div class="hidden edition-button">
+					<a href="#"><i class="fa-regular fa-pen-to-square"></i>
+						<p>modifier</p>
+					</a>
+				</div>
+				<h2>Designer d'espace</h2>
+				<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison
+					finale du chantier.</p>
+				<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les
+					couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du
+					chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
+				<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG,
+					décorateur(trice)</p>
+			</article>
+		</section>
+		<section id="portfolio">
+			<div class="portfolie-title">
+				<h2>Mes Projets</h2>
+				<div class="hidden edition-button">
+					<a href="" id="edit-button"><i class="fa-regular fa-pen-to-square"></i>
+						<p>modifier</p>
+					</a>
+				</div>
+			</div>
+			<div class="filters" id="filters"></div>
+			<!-- Affichage des filtres en JS -->
+			<div class="gallery" id="gallery">
+				<!-- Affichage des images en JS -->
+			</div>
+		</section>
+		<section id="contact">
+			<h2>Contact</h2>
+			<p>Vous avez un projet ? Discutons-en !</p>
+			<form action="#" method="post">
+				<label for="name">Nom</label>
+				<input type="text" name="name" id="name">
+				<label for="email">Email</label>
+				<input type="email" name="email" id="emai
+				l">
+				<label for="message">Message</label>
+				<textarea name="message" id="message" cols="30" rows="10"></textarea>
+				<input type="submit" value="Envoyer">
+			</form>
+		</section>
+	</main>
+
+	<footer>
 		<nav>
 			<ul>
-				<li>projets</li>
-				<li>contact</li>
-				<li><span>
-					<!-- Affichage du login si utilisateur non connecté, sinon logout -->
-					<a href="login.html" id="login">login</a>
-					<a class="hidden" href="#" id="logout">logout</a>
-				</span></li>
-				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+				<li>Mentions Légales</li>
 			</ul>
 		</nav>
-	</div>
-</header>
-<main>
-	<dialog class="modal" id="modal-window">
-		<!-- Fenetre modale -->
-		<div id="content">
-			<div class="top-window">
-				<a href="" id="close"><i class="fa-solid fa-xmark fa-xl"></i></a>
-			</div>
-			<h1>Galerie photo</h1>
-			<div id="work-edit" class="work-edit">
-				<!-- Affichage des travaux a editer -->
-			</div>
-			<div class="work-buttons">
-				<button id="add-button" class="button-add">Ajouter une photo</button>
-				<a href="" id="delete-link">supprimer la galerie</a>
-			</div>
-		</div>
-	</dialog>
-	<dialog class="modal" id="edit-window">
-		<!-- Seconde fenetre modale pour l'upload de fichiers -->
-		<div id="content">
-			<div class="top-window-edit">
-				<a href="" id="return"><i class="fa-sharp fa-solid fa-arrow-left fa-xl"></i></a>
-				<a href="" id="close"><i class="fa-solid fa-xmark fa-xl"></i></a>
-			</div>
-			<h1>Ajout photo</h1>
-				<!-- Formulaire pour l'ajout des images -->
-			<div class="add-photo" id="thumbnail">
-				<!-- Code pour l'ajout d'une image, a remplacer par l'aperçu -->
-				<!-- <i class="fa-solid fa-image fa-2xl"></i>
-				<label for="form-file" class="add-label">Ajouter photo</label>
-				<input type="file" name="file" id="form-file">
-				<p>jpg, png : 4mo max</p> -->
-			</div>
-			<form action="" class="upload">
-				<label for="title">Titre</label>
-				<input type="text" name="title" id="form-title">
-				<label for="category" id="form-category">Catégorie</label>
-				<select name="category" id="category-select">
-					<!-- Formulaire pour la selection des catégories -->
-				</select>
-				<div class="validate-button">
-					<button id="validate" type="button" class="button-disabled">Valider</button>
-				</div>
-			</form>
-		</div>
-	</dialog>
-	<section id="introduction">
-		<figure>
-			<img src="./assets/images/sophie-bluel.png" alt="">
-		</figure>
-		<article>
-			<h2>Designer d'espace</h2>
-			<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
-			<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
-			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
-		</article>
-	</section>
-	<section id="portfolio">
-		<h2>Mes Projets</h2>
-		<div class="filters" id="filters"></div>
-			<!-- Affichage des filtres en JS -->
-		<div class="gallery" id="gallery">
-			<!-- Affichage des images en JS -->
-		</div>
-	</section>
-	<section id="contact">
-		<h2>Contact</h2>
-		<p>Vous avez un projet ? Discutons-en !</p>
-		<form action="#" method="post">
-			<label for="name">Nom</label>
-			<input type="text" name="name" id="name">
-			<label for="email">Email</label>
-			<input type="email" name="email" id="email">
-			<label for="message">Message</label>
-			<textarea name="message" id="message" cols="30" rows="10"></textarea>
-			<input type="submit" value="Envoyer">
-		</form>
-	</section>
-</main>
-
-<footer>
-	<nav>
-		<ul>
-			<li>Mentions Légales</li>
-		</ul>
-	</nav>
-</footer>
+	</footer>
 </body>
+<script src="url.js"></script>
+<script src="app.js"></script>
+
 </html>
