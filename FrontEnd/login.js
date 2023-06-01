@@ -1,8 +1,9 @@
-const url = await GetUrl(); //Récupération url serveur
+//const url = await GetUrl(); //Récupération url serveur
 
 async function CheckLogin(email, pwd) // Vérification login
 {
     let UserLogin = `{"email": "${email}","password": "${pwd}"}`;
+    const url = await GetUrl();
     let response = await fetch(`${url}users/login`, {
     method: 'POST',
     headers: {
