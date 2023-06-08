@@ -151,7 +151,7 @@ async function AddWork(formData) {
     body: formData,
   });
 
-  let answer = await data.json();
+  //let answer = await data.json();
 
   await DisplayWorks(0);
 }
@@ -168,12 +168,11 @@ function CloseModal(modal, event) {
   event.preventDefault();
   event.stopPropagation();
 
-  console.log(modal.id);
-  //test faux
   if (modal.id === "edit-window") {
     const title = document.getElementById("form-title");
     title.value = "";
   }
+
   modal.close();
 }
 
@@ -320,45 +319,64 @@ async function DisplayThumbnail(image) {
   thumbnail.append(img);
 }
 
+function CheckFile(file) {
+  //Verifie le contenu et la taille du fichier
+
+  if (file.type === "image/jpeg" || file.type === "image/png") {
+    if (file.size <= 4000000) {
+      DisplayThumbnail(file);
+      return true;
+    } else {
+      alert("jpg, png : 4mo max");
+      return false;
+    }
+  } else {
+    alert("jpg, png : 4mo max");
+    return false;
+  }
+}
+
 async function DisplayForm() {
   // Affiche et rend interactif le formulaire d'ajout d'image
   const works = await GetCategory();
   const select = document.getElementById("category-select");
-  const file = document.getElementById("form-file");
+  const input = document.getElementById("form-file");
   const title = document.getElementById("form-title");
   const button = document.getElementById("validate");
   const edit = document.getElementById("edit-window");
-  let formData = new FormData();
-  let image;
+  let image = "";
   let category = 0;
   let check = false;
 
-  file.addEventListener("change", (event) => {
+  input.addEventListener("change", (event) => {
     if (event.target.files[0]) {
-      image = event.target.files[0];
-      CheckForm(image, title.value, category);
-      check = CheckForm(image, title.value, category);
-      DisplayThumbnail(image);
+      let file = event.target.files[0];
+      if (CheckFile(file));
+      {
+        //console.log(CheckForm(file, title.value, category));
+        check = CheckForm(file, title.value, category);
+        image = file;
+      }
     }
   });
 
   title.addEventListener("input", (event) => {
-    CheckForm(image, title.value, category);
     check = CheckForm(image, title.value, category);
+    console.log(title.value);
   });
 
   while (select.hasChildNodes()) {
     select.removeChild(select.firstChild);
   }
 
-  //ajout de la category vide
   let option = document.createElement("option");
+
   option.setAttribute("value", "0");
   select.append(option);
   option.addEventListener("click", (event) => {
     event.preventDefault();
     event.stopPropagation();
-    CheckForm(image, title.value, category);
+    check = CheckForm(image, title.value, category);
   });
 
   for (let id of works) {
@@ -373,21 +391,23 @@ async function DisplayForm() {
       event.preventDefault();
       event.stopPropagation();
       category = id.id;
-      CheckForm(image, title.value, category);
+      check = CheckForm(image, title.value, category);
     });
   }
 
-  button.addEventListener("click", (event) => {
+  button.onclick = (event) => {
     if (check === true) {
+      let formData = new FormData();
+
       formData.append("image", image);
       formData.append("title", title.value);
       formData.append("category", category);
 
       AddWork(formData);
       CloseModal(edit, event);
-      //title.value = "";
+      check = false;
     }
-  });
+  };
 }
 
 /* Execution du programme au chargement de la page */
