@@ -170,7 +170,9 @@ function CloseModal(modal, event) {
 
   if (modal.id === "edit-window") {
     const title = document.getElementById("form-title");
+    const file = document.getElementById("form-file");
     title.value = "";
+    file.value = "";
   }
 
   modal.close();
@@ -257,10 +259,6 @@ function EditWindow() {
   // Affichage et fermeture de la fenetre modale d'edition
   const modal = document.getElementById("modal-window");
   const edit = document.getElementById("edit-window");
-  const display = `<i class="fa-solid fa-image fa-2xl"></i>
-                    <label for="form-file" class="add-label"><i class="fa-solid fa-plus"></i><p>Ajouter photo</p></label>
-                    <input type="file" name="file" id="form-file">
-                    <p>jpg, png : 4mo max</p>`;
 
   document.getElementById("close2").addEventListener("click", (event) => {
     CloseModal(edit, event);
@@ -271,8 +269,6 @@ function EditWindow() {
     OpenModal(modal, event);
     CreateModalHTML();
   });
-
-  document.getElementById("thumbnail").innerHTML = display;
 
   CheckFocus(edit);
 
@@ -296,6 +292,7 @@ function CheckForm(file, title, category) {
 
 async function DisplayThumbnail(image) {
   const thumbnail = document.getElementById("thumbnail");
+  const form = document.getElementById("add-photo-form");
   const reader = new FileReader();
   let img = document.createElement("img");
 
@@ -316,6 +313,8 @@ async function DisplayThumbnail(image) {
     thumbnail.removeChild(thumbnail.firstChild);
   }
 
+  form.classList.add("hidden");
+  thumbnail.classList.remove("hidden");
   thumbnail.append(img);
 }
 
@@ -344,16 +343,20 @@ async function DisplayForm() {
   const title = document.getElementById("form-title");
   const button = document.getElementById("validate");
   const edit = document.getElementById("edit-window");
+  const form = document.getElementById("add-photo-form");
+  const thumbnail = document.getElementById("thumbnail");
   let image = "";
   let category = 0;
   let check = false;
+
+  form.classList.remove("hidden");
+  thumbnail.classList.add("hidden");
 
   input.addEventListener("change", (event) => {
     if (event.target.files[0]) {
       let file = event.target.files[0];
       if (CheckFile(file));
       {
-        //console.log(CheckForm(file, title.value, category));
         check = CheckForm(file, title.value, category);
         image = file;
       }
@@ -362,7 +365,6 @@ async function DisplayForm() {
 
   title.addEventListener("input", (event) => {
     check = CheckForm(image, title.value, category);
-    console.log(title.value);
   });
 
   while (select.hasChildNodes()) {
