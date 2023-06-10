@@ -63,8 +63,19 @@
 				</div>
 				<h1>Ajout photo</h1>
 				<!-- Formulaire pour l'ajout des images -->
-				<div class="add-photo" id="thumbnail">
-					<!-- Code pour l'ajout d'une image, a remplacer par l'aperçu -->
+				<div class="add-photo">
+					<!-- ajout d'une image ou affichage de l'aperçu -->
+					<div class="add-photo-form" id="add-photo-form">
+						<i class="fa-solid fa-image fa-2xl"></i>
+						<label for="form-file" class="add-label"><i class="fa-solid fa-plus"></i>
+							<p>Ajouter photo</p>
+						</label>
+						<input type="file" name="file" id="form-file">
+						<p>jpg, png : 4mo max</p>
+					</div>
+					<div class="thumbnail hidden" id="thumbnail">
+
+					</div>
 				</div>
 				<form action="" class="upload">
 					<label for="title">Titre</label>
