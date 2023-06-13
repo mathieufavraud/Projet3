@@ -158,9 +158,11 @@ async function AddWork(formData) {
 
 function OpenModal(modal, event) {
   // Ouvrir la fenetre modale
-  event.preventDefault();
-  event.stopPropagation();
-  modal.showModal();
+  if (modal.open !== true) {
+    event.preventDefault();
+    event.stopPropagation();
+    modal.showModal();
+  }
 }
 
 function CloseModal(modal, event) {
