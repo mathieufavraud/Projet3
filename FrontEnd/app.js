@@ -1,4 +1,3 @@
-//const url = await GetUrl(); // Récupération url serveur
 async function GetCategory() {
   // Récuperation des catégories sur le serveur
   const url = await GetUrl();
@@ -223,8 +222,10 @@ async function CreateModalHTML() {
       .addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation();
-        DeleteWork(id.id);
-        DeleteCard(id.id);
+        if (confirm("Etes vous sûr de vouloir supprimer l'image ?")) {
+          DeleteWork(id.id);
+          DeleteCard(id.id);
+        }
       });
   }
 }
@@ -293,6 +294,7 @@ function CheckForm(file, title, category) {
 }
 
 async function DisplayThumbnail(image) {
+  // Affichage de l'aperçu de l'image du formulaire d'ajout
   const thumbnail = document.getElementById("thumbnail");
   const form = document.getElementById("add-photo-form");
   const reader = new FileReader();
